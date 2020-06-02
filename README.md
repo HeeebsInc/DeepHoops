@@ -5,6 +5,6 @@ Machine Learning algorithm to predict daily fantasy basketball points.  Utilizes
 
 Visit my blog on medium.com to follow through the entire tutorial! 
 
-I plan on combining the entire tutorial here once it is fully completed! 
+The README will contain the entire tutorial once it is finished. 
 
 https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98

@@ -1,0 +1,62 @@
+To specify a start date, append &start=YYYYMMDD to the URL
+To specify an end date, append &end=YYYYMMDD to the URL
+
+Legend - all data elements are separated by a colon (:)
+GID: Guru ID, unique for each player
+Last, First: Player name
+First Last: Player nme
+Date: game date in format YYYYMMDD
+Team: player's team for this game date
+Opp: opponent for this game date
+H/A: home or away game
+GameID: a unique ID for each game in the format YYYYMMDD-aaa-hhh (aaa=away team, hhh=home team)
+GTime(ET): Scheduled start time, using Eastern time zone and based on a 24 hour clock  (e.g., 19.5=7:30 ET)
+Team pts: Total points scored by player's team (real points, not fantasy points)
+Opp pts: Total points scored by opposing team
+Start: indicates "1" if player was in starting lineup
+Minutes: player minutes played (decimal format)
+GP: indicates "1" if player appeared in the game
+active: indicates "1" if player was on the active roster for the game
+FDP: FanDuel points
+DKP: DraftKings points
+DDP: DraftDay points
+YHP: Yahoo DFS points
+stats: stat string (see note below)
+DoubleD: 1=double-double
+TripleD: 1=triple-double
+FD sal: FanDuel salary
+FD Change: FanDuel salary change (since last listed salary)
+DK sal: DraftKings salary
+DK Change: DraftKings salary change (since last listed salary)
+DD sal: DraftDay salary (obsolete - will be blank)
+DD Change: DraftDay salary change (obsolete - will be blank)
+YH sal: Yahoo DFS salary
+YH Change: Yahoo DFS salary change (since last listed salary)
+FD pos: FanDuel position, 1=PG, 2=SG, 3=SF, 4=PF, 5=C
+DK pos: DraftKings position, 1=PG, 2=SG, 3=SF, 4=PF, 5=C - all values shown for multi-position eligibility
+DD pos: DraftDay position, (obsolete - will be blank)
+YH pos: Yahoo DFS position, 1=PG, 2=SG, 3=SF, 4=PF, 5=C
+ADI: Air density index for the game venue, as reported by basketballVMI.com *
+VMI: VMI index for the team, as reported by basketballVMI.com *
+
+* ADI and VMI values for the current day will only be provided to those who are registered members at basketballVMI.com.  Historical ADI and VMI values are unrestricted.
+
+Note on stat string:
+My license agreement with my stats provider prohibits me from directly passing along raw stats for each player in tabular form (in effect making me a stats provider), so instead I have provided a "stat string"  which lists the non-zero stats for each player, with each item delimited by spaces.
+pt=points
+rb=rebounds
+as=assists
+st=steals
+bl=blocks
+to=turnovers
+trey=3 pointers made
+fg=field goals made-attempted
+ft=free throws made-attempted
+
+
+File is typically updated by 6:00am ET each morning to include stats from the previous night.
+One line is provided for each player for each previous game day.
+Current day's games are also listed (salary and position data). This date for this pending contest data advances at 11pm each night.
+
+
+For additional questions, please email davehall@rotoguru2.com

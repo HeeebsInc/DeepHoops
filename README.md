@@ -22,5 +22,5 @@ https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-ba
 
 
 ## Comparing Performance
-![Performace Comparison Linear, ANN, RNN)
+![Performace Comparison Linear, ANN, RNN](ML_Models/PlotImages/Performance.png)
 

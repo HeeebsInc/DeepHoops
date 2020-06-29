@@ -1,5 +1,5 @@
 # FantasyBasketbalML
-Machine Learning algorithm to predict daily fantasy basketball points.  Utilizes regression and CSP concepts
+Machine Learning/AI algorithm to predict daily fantasy basketball points.  Utilizes regression, ANN, and RNN architectures
 
 Visit my blog on medium.com to follow through the entire tutorial! 
 

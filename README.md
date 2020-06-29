@@ -3,7 +3,7 @@ Machine Learning algorithm to predict daily fantasy basketball points.  Utilizes
 
 Visit my blog on medium.com to follow through the entire tutorial! 
 
-https://medium.com/@HeeebsInc/using-machine-learning-to-predict-daily-fantasy-basketball-scores-part-i-811de3c54a98
+https://medium.com/@HeeebsInc
 
 ## Distribution of Fan Duel Points Scored
 ![Distributions](ML_Models/PlotImages/Distributions.png)

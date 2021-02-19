@@ -5,7 +5,6 @@ from tqdm import tqdm
 import time
 import socket
 import os
-import config
 
 class NBAStatScraper:
     def __init__(self, season_start_links, scrape_type):
@@ -68,14 +67,16 @@ class NBAStatScraper:
 
     def get_table_info(self, soup, link):
         columns = ['Player', 'Team', 'Against', 'Home', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
-                   'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+/-']
+                   'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+/-', 'GameUrl']
         # column_2 = ['TS%', 'eFG%',
         #            'FTr', 'ORB%', 'DRB%', 'TRB%', 'AST%', 'STL%', 'BLK%', 'TOV%', 'USG%', 'ORtg', 'DRtg', 'BPM']
         header = soup.findAll('h1')[0].text.split(',')
         date = ''.join(header[-2:]).strip()
         teams = header[0].split('at')
+        # away_team = teams[0].strip()
+        # home_team = teams[1][:teams[1].find('Box Score')].strip()
         away_team = teams[0].strip()
-        home_team = teams[1][:teams[1].find('Box Score')].strip()
+        home_team = teams[-1][:teams[-1].find('Box Score')].strip()
         tables = soup.findAll('tbody')
         #get unqiue players
         player_dict = {}

@@ -5,6 +5,7 @@ from tqdm import tqdm
 import time
 import socket
 import os
+import pickle
 
 class NBAStatScraper:
     def __init__(self, season_start_links, scrape_type):
@@ -66,7 +67,7 @@ class NBAStatScraper:
             full_season_df.to_csv(f'{self.data_path}/bbref-files/{season}.csv', index = False)
 
     def get_table_info(self, soup, link):
-        columns = ['Player', 'Team', 'Against', 'Home', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
+        columns = ['Player', 'Date', 'Team', 'Against', 'Home', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
                    'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+/-']
         # column_2 = ['TS%', 'eFG%',
         #            'FTr', 'ORB%', 'DRB%', 'TRB%', 'AST%', 'STL%', 'BLK%', 'TOV%', 'USG%', 'ORtg', 'DRtg', 'BPM']
@@ -128,6 +129,7 @@ class NBAStatScraper:
         game_df = pd.concat(game_df_pieces)
         game_df['GameLink'] = [link for i in range(len(game_df))]
         # game_df.to_csv('Tester.csv', index = False)
+        # game_df.to_csv('Tester.csv', index = False)
         return game_df
 
     def get_game_links(self):
@@ -180,49 +182,49 @@ class NBAStatScraper:
         # print(self.month_url_dict[season])
 
 if __name__ == '__main__':
-    # season_dict = ['https://www.basketball-reference.com/leagues/NBA_2015_games.html',
-    #                'https://www.basketball-reference.com/leagues/NBA_2017_games.html',
-    #                 'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
-    #                 'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
-    #                 'https://www.basketball-reference.com/leagues/NBA_2020_games.html']
-    # season_list_3 = [
-    #     'https://www.basketball-reference.com/leagues/NBA_2020_games.html'
-    # ]
-    # season_list_2 = [
-    #     'https://www.basketball-reference.com/leagues/NBA_2012_games.html',
-    # ]
-    # season_list_1 = [
-    #     'https://www.basketball-reference.com/leagues/NBA_2005_games.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2006_games.html',
-    # ]       #doesnt work with current method
-    #
-    # season_list_0 = [
-    #     'https://www.basketball-reference.com/leagues/NBA_2001.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2002.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2003.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2004.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2007.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2008.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2009.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2010.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2011.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2013.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2014.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2015_games.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2016_games.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2017_games.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
-    #     'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
-    # ]
-    # season_dict = {0: season_list_0, 1: season_list_1, 2: season_list_2, 3: season_list_3}
-    #
-    # for scrape_type, season_list in season_dict.items():
-    #     nba_stat_scraper = NBAStatScraper(season_list, scrape_type = scrape_type)
-    #     nba_stat_scraper.scrape_stats()
-
-    season_list = [
-       'https://www.basketball-reference.com/leagues/NBA_2016_games.html'
+    season_dict = ['https://www.basketball-reference.com/leagues/NBA_2015_games.html',
+                   'https://www.basketball-reference.com/leagues/NBA_2017_games.html',
+                    'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
+                    'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
+                    'https://www.basketball-reference.com/leagues/NBA_2020_games.html']
+    season_list_3 = [
+        'https://www.basketball-reference.com/leagues/NBA_2020_games.html'
     ]
+    season_list_2 = [
+        'https://www.basketball-reference.com/leagues/NBA_2012_games.html',
+    ]
+    season_list_1 = [
+        'https://www.basketball-reference.com/leagues/NBA_2005_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2006_games.html',
+    ]       #doesnt work with current method
 
-    nba_stat_scraper = NBAStatScraper(season_list, scrape_type = 0)
-    nba_stat_scraper.scrape_stats()
+    season_list_0 = [
+        'https://www.basketball-reference.com/leagues/NBA_2001_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2002_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2003_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2004_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2007_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2008_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2009_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2010_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2011_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2013_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2014_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2015_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2016_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2017_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
+    ]
+    season_dict = {0: season_list_0, 1: season_list_1, 2: season_list_2, 3: season_list_3}
+
+    for scrape_type, season_list in season_dict.items():
+        nba_stat_scraper = NBAStatScraper(season_list, scrape_type = scrape_type)
+        nba_stat_scraper.scrape_stats()
+
+    # season_list = [
+    #    'https://www.basketball-reference.com/leagues/NBA_2016_games.html'
+    # ]
+    #
+    # nba_stat_scraper = NBAStatScraper(season_list, scrape_type = 0)
+    # nba_stat_scraper.scrape_stats()

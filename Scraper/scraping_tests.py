@@ -13,12 +13,14 @@ def get_table_info(link):
     header = soup.findAll('h1')[0].text.split(',')
     date = ''.join(header[-2:]).strip()
     teams = header[0].split('at')
-    # print(teams)
+    print(teams)
     away_team = teams[0].strip()
     home_team = teams[-1][:teams[-1].find('Box Score')].strip()
-
+    if home_team == '':
+        home_team = teams[-2][:teams[-2].find('Box Score')].strip()
     tables = soup.findAll('tbody')
-    # print(away_team, home_team)
+    print(away_team, '|', home_team)
+    print('~' * 50)
     # get unqiue players
     player_dict = {}
     away_idx = [0]
@@ -71,11 +73,24 @@ def get_table_info(link):
 
 
 link = 'https://www.basketball-reference.com/boxscores/201601130DEN.html'
-
 get_table_info(link)
 
 link = 'https://www.basketball-reference.com/boxscores/201601130OKC.html'
 get_table_info(link)
 
 link = 'https://www.basketball-reference.com/boxscores/201602030DAL.html'
+get_table_info(link)
+
+
+
+link = 'https://www.basketball-reference.com/boxscores/201512070MIA.html'
+get_table_info(link)
+
+link = 'https://www.basketball-reference.com/boxscores/201606100CLE.html'
+get_table_info(link)
+
+link = 'https://www.basketball-reference.com/boxscores/201511010MIA.html'
+get_table_info(link)
+
+link = 'https://www.basketball-reference.com/boxscores/201512180GSW.html'
 get_table_info(link)

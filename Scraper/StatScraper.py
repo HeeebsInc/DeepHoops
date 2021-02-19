@@ -67,7 +67,7 @@ class NBAStatScraper:
 
     def get_table_info(self, soup, link):
         columns = ['Player', 'Team', 'Against', 'Home', 'MP', 'FG', 'FGA', 'FG%', '3P', '3PA', '3P%', 'FT', 'FTA', 'FT%', 'ORB',
-                   'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+/-', 'GameUrl']
+                   'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS', '+/-']
         # column_2 = ['TS%', 'eFG%',
         #            'FTr', 'ORB%', 'DRB%', 'TRB%', 'AST%', 'STL%', 'BLK%', 'TOV%', 'USG%', 'ORtg', 'DRtg', 'BPM']
         header = soup.findAll('h1')[0].text.split(',')
@@ -77,6 +77,8 @@ class NBAStatScraper:
         # home_team = teams[1][:teams[1].find('Box Score')].strip()
         away_team = teams[0].strip()
         home_team = teams[-1][:teams[-1].find('Box Score')].strip()
+        if home_team == '':
+            home_team = teams[-2][:teams[-2].find('Box Score')].strip()
         tables = soup.findAll('tbody')
         #get unqiue players
         player_dict = {}
@@ -116,7 +118,6 @@ class NBAStatScraper:
                     cols = [i.text.strip() for i in cols]
                     for c in cols:
                         player_dict[name].append(c)
-                    player_dict[name].append(link)
                 except AttributeError:
                     continue
         game_df_pieces = []
@@ -125,6 +126,7 @@ class NBAStatScraper:
             row_df = pd.DataFrame(row_dict, index = [0])
             game_df_pieces.append(row_df)
         game_df = pd.concat(game_df_pieces)
+        game_df['GameLink'] = [link for i in range(len(game_df))]
         # game_df.to_csv('Tester.csv', index = False)
         return game_df
 

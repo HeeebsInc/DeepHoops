@@ -7,8 +7,6 @@ import socket
 import pickle
 import os
 
-
-
 class NBAStatScraper:
     def __init__(self, season_start_links, scrape_type):
         self.scrape_type = scrape_type
@@ -53,7 +51,7 @@ class NBAStatScraper:
         self.get_game_stats()
 
     def get_game_stats(self):
-        self.full_game_urls = pickle.load(open(f'{self.data_path}/pickles/GameLinks.p', 'rb'))
+        # self.full_game_urls = pickle.load(open(f'{self.data_path}/pickles/GameLinks.p', 'rb'))
         for season, game_links in self.full_game_urls.items():
             pieces = []
             pbar = tqdm(game_links, desc = f'Scraping Games: {season}')
@@ -91,12 +89,12 @@ class NBAStatScraper:
             if idx not in away_idx + home_idx:
                 continue
             if idx in away_idx:
-                team = self.team_dictionary[away_team]
-                opp = self.team_dictionary[home_team]
+                team = away_team
+                opp = home_team
                 home = 0
             else:
-                team = self.team_dictionary[home_team]
-                opp = self.team_dictionary[away_team]
+                team = home_team
+                opp = away_team
                 home = 1
             for row in table:
                 try:
@@ -147,6 +145,7 @@ class NBAStatScraper:
                         continue
                     full_url = f'{self.base_url}{link["href"]}'
                     season_game_urls.append(full_url)
+
             self.full_game_urls[season] = season_game_urls
             pbar.update(1)
         pbar.close()
@@ -154,7 +153,14 @@ class NBAStatScraper:
         del self.month_url_dict
 
     def get_months(self):
-        months = ['october', 'november', 'december', 'january', 'february', 'march', 'april', 'may', 'june']
+        if self.scrape_type == 0:
+            months = ['october', 'november', 'december', 'january', 'february', 'march', 'april', 'may', 'june']
+        elif self.scrape_type == 1:
+            months = ['november', 'december', 'january', 'february', 'march', 'april', 'may', 'june']
+        elif self.scrape_type == 2:
+            months = ['december', 'january', 'february', 'march', 'april', 'may', 'june']
+        elif self.scrape_type == 3:
+            months = ['october-2019', 'november', 'december', 'january', 'february', 'march', 'july', 'august', 'september', 'october-2020']
         self.month_url_dict = {}
         for season_start_link in self.season_start_links:
             response = requests.get(season_start_link)
@@ -168,6 +174,7 @@ class NBAStatScraper:
                 base_url = f'https://www.basketball-reference.com/leagues/NBA_{year}_games-{month}.html'
                 season_month_list.append(base_url)
             self.month_url_dict[season] = season_month_list
+        # print(self.month_url_dict[season])
 
 
 if __name__ == '__main__':
@@ -176,14 +183,18 @@ if __name__ == '__main__':
     #                 'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
     #                 'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
     #                 'https://www.basketball-reference.com/leagues/NBA_2020_games.html']
-    season_dict_2 = [
-        'https://www.basketball-reference.com/leagues/NBA_2005.html',
-        'https://www.basketball-reference.com/leagues/NBA_2006.html',
-        'https://www.basketball-reference.com/leagues/NBA_2012.html',
+    season_list_3 = [
         'https://www.basketball-reference.com/leagues/NBA_2020_games.html'
+    ]
+    season_list_2 = [
+        'https://www.basketball-reference.com/leagues/NBA_2012_games.html',
+    ]
+    season_list_1 = [
+        'https://www.basketball-reference.com/leagues/NBA_2005_games.html',
+        'https://www.basketball-reference.com/leagues/NBA_2006_games.html',
     ]       #doesnt work with current method
 
-    season_dict_1 = [
+    season_list_0 = [
         'https://www.basketball-reference.com/leagues/NBA_2001.html',
         'https://www.basketball-reference.com/leagues/NBA_2002.html',
         'https://www.basketball-reference.com/leagues/NBA_2003.html',
@@ -201,7 +212,8 @@ if __name__ == '__main__':
         'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
         'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
     ]
+    season_dict = {0: season_list_0, 1: season_list_1, 2: season_list_2, 3: season_list_3}
 
-    nba_stat_scraper = NBAStatScraper(season_dict_1, scrape_type = 1)
-
-    nba_stat_scraper.scrape_stats()
+    for scrape_type, season_list in season_dict.items():
+        nba_stat_scraper = NBAStatScraper(season_list, scrape_type = scrape_type)
+        nba_stat_scraper.scrape_stats()

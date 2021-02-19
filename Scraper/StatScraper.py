@@ -16,9 +16,11 @@ class NBAStatScraper:
 
         computer_name = socket.gethostname()
 
-        # if computer_name == 'samuel-linux':
-        #     self.data_path = '/NN_FantasyBasketball/Scraper/Data'
-        self.data_path = '/NN_FantasyBasketball/Scraper/Data'
+        if computer_name == 'samuel-linux':
+            self.data_path = '/NN_FantasyBasketball/Scraper/Data'
+        elif computer_name == 'samuel-pi':
+            self.data_path = f'/home/pi/FantasyBasketball/NN_FantasyBasketball/Data'
+        # self.data_path = '/NN_FantasyBasketball/Scraper/Data'
 
         if not os.path.exists(self.data_path):
             os.mkdir(self.data_path)

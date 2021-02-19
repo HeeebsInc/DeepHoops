@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 import time
 import socket
-import pickle
 import os
 import config
 
@@ -16,10 +15,10 @@ class NBAStatScraper:
 
         computer_name = socket.gethostname()
 
-        if computer_name == config.dev_machine:
-            self.data_path = config.dev_machine_path
-        elif computer_name == config.dev_machine:
-            self.data_path = config.pi_machine_path
+        if computer_name == 'samuel-linux':
+            self.data_path = '/home/samuel-linux/PycharmProjects/Personal/FantasyBasketball/NN_FantasyBasketball/Data'
+        elif computer_name == 'samuel-pi':
+            self.data_path = '/home/pi/FantasyBasketball/NN_FantasyBasketball/Data'
 
         if not os.path.exists(self.data_path):
             os.mkdir(self.data_path)

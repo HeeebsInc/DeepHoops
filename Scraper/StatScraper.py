@@ -5,6 +5,7 @@ from tqdm import tqdm
 import time
 import socket
 import pickle
+import os
 
 
 
@@ -15,8 +16,14 @@ class NBAStatScraper:
 
         computer_name = socket.gethostname()
 
-        if computer_name == 'samuel-linux':
-            self.data_path = '/home/samuel-linux/PycharmProjects/Personal/FantasyBasketball/NN_FantasyBasketball/Data'
+        # if computer_name == 'samuel-linux':
+        #     self.data_path = '/NN_FantasyBasketball/Scraper/Data'
+        self.data_path = '/NN_FantasyBasketball/Scraper/Data'
+
+        if not os.path.exists(self.data_path):
+            os.mkdir(self.data_path)
+            os.mkdir(f'{self.data_path}/pickles')
+            os.mkdir(f'{self.data_path}/bbref-files')
 
         self.team_dictionary = {
             'Atlanta Hawks': 'Atl', 'Boston Celtics': 'Bos',
@@ -205,18 +212,12 @@ class NBAStatScraper:
 
 
 
-
-
-
-
-
-
 if __name__ == '__main__':
-    season_dict = {'https://www.basketball-reference.com/leagues/NBA_2015_games.html',
+    season_dict = ['https://www.basketball-reference.com/leagues/NBA_2015_games.html',
                    'https://www.basketball-reference.com/leagues/NBA_2017_games.html',
                     'https://www.basketball-reference.com/leagues/NBA_2018_games.html',
                     'https://www.basketball-reference.com/leagues/NBA_2019_games.html',
-                    'https://www.basketball-reference.com/leagues/NBA_2020_games.html'}
+                    'https://www.basketball-reference.com/leagues/NBA_2020_games.html'][::-1]
 
     nba_stat_scraper = NBAStatScraper(season_dict)
 

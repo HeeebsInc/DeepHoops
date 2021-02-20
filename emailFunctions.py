@@ -26,7 +26,7 @@ def add_delete_website():
         first_email_id = int(id_list[0])
         latest_email_id = int(id_list[-1])
 
-        email_list = pd.read_csv('Data/EmailList.csv')
+        email_list = pd.read_csv('../Data/EmailList.csv')
         email_array = pd.array(email_list['Email'])     #checks to see if the email is stored in the saved emails list
         #print(email_array)
         for i in range(latest_email_id,first_email_id, -1):
